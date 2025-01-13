@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Grab Video Links
+// @name         Tiktok post grab links
 // @namespace    http://tampermonkey.net/
 // @version      1.2
 // @description  Script for grabbing TikTok video links with unlimited scrolling
@@ -9,10 +9,10 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  'use strict';
 
   function grabLinks() {
-    console.log("Starting to scroll to the bottom...");
+    console.log('Starting to scroll to the bottom...');
 
     const scrollToBottom = () => {
       return new Promise((resolve) => {
@@ -21,7 +21,7 @@
         const interval = setInterval(() => {
           const currentHeight = document.body.offsetHeight;
           window.scrollBy(0, 1000);
-          console.log("Scrolling... Current height:", currentHeight);
+          console.log('Scrolling... Current height:', currentHeight);
           if (currentHeight === lastHeight) {
             clearInterval(interval);
             resolve();
@@ -35,14 +35,14 @@
     const extractLinks = async () => {
       await scrollToBottom();
       console.log(
-        "Finished scrolling. Starting to extract tiktok post links..."
+        'Finished scrolling. Starting to extract tiktok post links...'
       );
 
       let arrayVideos = [];
       const containers = document.querySelectorAll(
         '[class*="-DivItemContainerV2"]'
       );
-      console.log("Containers found:", containers.length); // Debugging
+      console.log('Containers found:', containers.length); // Debugging
 
       for (const container of containers) {
         const link = container.querySelector('[data-e2e="user-post-item"] a');
@@ -51,14 +51,14 @@
         }
       }
 
-      console.log("Tiktok post links extracted:\n", arrayVideos);
+      console.log('Tiktok post links extracted:\n', arrayVideos);
 
       if (arrayVideos.length > 0) {
-        console.log("Total post links found:", arrayVideos.length);
-        const blob = new Blob([arrayVideos.join("\n")], { type: "text/plain" });
-        const a = document.createElement("a");
+        console.log('Total post links found:', arrayVideos.length);
+        const blob = new Blob([arrayVideos.join('\n')], { type: 'text/plain' });
+        const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        const filename = `${window.location.pathname.replace("/", "")}.txt`;
+        const filename = `${window.location.pathname.replace('/', '')}.txt`;
         a.download = `${filename}`;
         document.body.appendChild(a);
         a.click();
@@ -71,21 +71,21 @@
 
     extractLinks();
   }
-  const button = document.createElement("button");
-  button.textContent = "Grab Tiktok Post Links";
-  button.style.position = "fixed";
-  button.style.bottom = "20px";
-  button.style.right = "20px";
+  const button = document.createElement('button');
+  button.textContent = 'Grab Tiktok Post Links';
+  button.style.position = 'fixed';
+  button.style.bottom = '20px';
+  button.style.right = '20px';
   button.style.zIndex = 1000;
-  button.style.padding = "10px";
-  button.style.backgroundColor = "#007bff";
-  button.style.color = "#fff";
-  button.style.border = "none";
-  button.style.borderRadius = "5px";
-  button.style.cursor = "pointer";
+  button.style.padding = '10px';
+  button.style.backgroundColor = '#007bff';
+  button.style.color = '#fff';
+  button.style.border = 'none';
+  button.style.borderRadius = '5px';
+  button.style.cursor = 'pointer';
 
-  button.addEventListener("click", grabLinks);
+  button.addEventListener('click', grabLinks);
 
   document.body.appendChild(button);
-  console.log("Button added to the page"); // Debugging
+  console.log('Button added to the page'); // Debugging
 })();
