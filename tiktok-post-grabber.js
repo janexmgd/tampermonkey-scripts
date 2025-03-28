@@ -4,7 +4,7 @@
 // @version      1.2
 // @description  Script for grabbing TikTok video links with unlimited scrolling
 // @author       https://github.com/janexmgd
-// @match        *://www.tiktok.com/@*
+// @match        *tiktok.com/@*
 // @grant        none
 // ==/UserScript==
 
@@ -87,5 +87,5 @@
   button.addEventListener('click', grabLinks);
 
   document.body.appendChild(button);
-  console.log('Button added to the page'); // Debugging
+  console.log('Button added to the page');
 })();
